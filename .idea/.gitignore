@@ -3,4 +3,5 @@
 /workspace.xml
 /modules.xml
 /.idea/libraries
+../target
 ../Elastacloud_test.iml
