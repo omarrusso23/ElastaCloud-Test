@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Elastacloud test" />
+        <module name="Elastacloud_test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Elastacloud test" target="18" />
+      <module name="Elastacloud_test" target="18" />
     </bytecodeTargetLevel>
   </component>
 </project>
