@@ -22,6 +22,21 @@ public class DataLoader {
             "Longitude", 18
     );
 
+    //A map to store the agency names corresponding to their IDs
+    private static final Map<String, String> AGENCY_NAMES_BY_ID = Map.of(
+            "1", "Agency 1",
+            "2", "Agency 2",
+            "3", "Agency 3",
+            "4", "Agency 4",
+            "5", "Agency 5",
+            "13", "Agency 13",
+            "51", "Agency 51",
+            "53", "Agency 53",
+            "54", "Agency 54",
+            "36", "Agency 36"
+
+            );
+
     public static void main(String[] args) throws ParseException {
         //Line that will help us go through the CSV file
         String line;
@@ -57,6 +72,9 @@ public class DataLoader {
                 String agency = data[COLUMN_INDEX_BY_NAME.get("Agency")];
                 String make = data[COLUMN_INDEX_BY_NAME.get("Make")];
 
+                //Get the agency name from the ID
+                String agencyName = AGENCY_NAMES_BY_ID.get(agency);
+
                 //These use the helper methods as they must do some extra steps
                 String issueDateTime = processIssueDateTime(issueDateStr, issueTimeStr);
                 String plateExpiryDate = processPlateExpiryDate(plateExpiryDateStr);
@@ -69,7 +87,8 @@ public class DataLoader {
                 System.out.println("Plate Expiry Date: " + plateExpiryDate);
                 System.out.println("Latitude: " + latitude);
                 System.out.println("Longitude: " + longitude);
-                System.out.println("Agency: " + agency);
+                System.out.println("Agency ID: " + agency);
+                System.out.println("Agency Name: " + agencyName);
                 System.out.println("-------------------------------------");
 
                 //This String is special as it will be used to calculate the necessary staff for the second part that is
