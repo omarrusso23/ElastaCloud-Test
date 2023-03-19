@@ -3,11 +3,18 @@ The csv has been reduce to 5330 entries for the sake of time for the program to 
 
 # Data Loader
 
+## Table of Contents  
+1. [Introduction](#introduction)  
+2. [Explanation of  the code](#explanation-of-the-code)  
+3. [Crib Sheet](#crib-sheet)
+4. [Usage](#usage)
+5. [Output](#output)
+
 ## Introduction
 
 This is a Java program that reads data from a CSV file and performs various operations on the data. The program is designed to read a specific CSV file and extract information from specific columns in the file. It then calculates and outputs various statistics based on the extracted data.
 
-## Explanation of Code
+## Explanation of the code
 
 The program uses the java.io and java.util packages to read and process the data from the CSV file. The program has a main method, which is the entry point of the program, and several helper methods that are used to process the data.
 
@@ -23,21 +30,7 @@ We have a csv called crib sheet where we have 100 Agencies and we read it to ext
 
 ## Usage
 
-To use this program, simply run the `DataLoader` class. The program will read in the `data.csv` file located in the same directory as the program.
-
-## CSV file format
-
-The CSV file must contain the following columns, in order:
-
-- `Ticket number`
-- `Issue Date`
-- `Issue time`
-- `Plate Expiry Date`
-- `Make`
-- `Agency`
-- `Fine Amount`
-- `Latitude`
-- `Longitude`
+To use this program, simply run the `DataLoader` class. The program will read in the `data.csv` and `crib sheet.csv` files located in the same directory as the program.
 
 ## Output
 
@@ -48,10 +41,11 @@ For each row in the CSV file, the program will output the following information:
 - `Plate Expiry Date`
 - `Latitude`
 - `Longitude`
-- `Agency`
+- `Agency Id`
+- `Agency name`
+
 
 In addition, the program calculates and outputs the following statistics:
 
-- Total fines by make and year
-- Total fines by agency and year
-- Average fine amount by agency and year
+- Total of fines issues per year per make of vehicle
+- Average and Standard Deviation of the fine amount per year per agency
