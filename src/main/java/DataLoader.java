@@ -8,6 +8,7 @@ import java.util.*;
 public class DataLoader {
     //This is the path of the CSV file in this case is in the same path as the project
     private static final String DATA_FILE = "data.csv";
+    private static final String CRIB_SHEET_FILE = "crib-sheet.csv";
 
     //A Map with the info of the columns
     private static final Map<String, Integer> COLUMN_INDEX_BY_NAME = Map.of(
@@ -23,19 +24,7 @@ public class DataLoader {
     );
 
     //A map to store the agency names corresponding to their IDs
-    private static final Map<String, String> AGENCY_NAMES_BY_ID = Map.of(
-            "1", "Agency 1",
-            "2", "Agency 2",
-            "3", "Agency 3",
-            "4", "Agency 4",
-            "5", "Agency 5",
-            "13", "Agency 13",
-            "51", "Agency 51",
-            "53", "Agency 53",
-            "54", "Agency 54",
-            "36", "Agency 36"
-
-            );
+    private static final Map<String, String> AGENCY_NAMES_BY_ID = new HashMap<>();
 
     public static void main(String[] args) throws ParseException {
         //Line that will help us go through the CSV file
@@ -43,6 +32,19 @@ public class DataLoader {
 
         //The Delimiter is what will tell us what separates two columns
         final String CSV_DELIMITER = ",";
+
+        //Here we read the crib sheet to get the agency name so we can print it if it matches the id exist in data.csv
+        // Try-with-resources block to open and read the file, and handle any exceptions that may arise
+        try (BufferedReader br = new BufferedReader(new FileReader(CRIB_SHEET_FILE))) {
+            // Here we read the crib sheet file and store the key-value pairs in a map
+            while ((line = br.readLine()) != null) {
+                String[] data2 = line.split(CSV_DELIMITER);
+                AGENCY_NAMES_BY_ID.put(data2[0], data2[1]);
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading crib sheet file: " + e.getMessage());
+            return;
+        }
 
         //These maps are used to calculate all the fines
         Map<String, Integer> finesByMakeAndYear = new HashMap<>();
@@ -105,13 +107,14 @@ public class DataLoader {
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(issueDate);
                 int year = cal.get(Calendar.YEAR);
-                String key = agency + "_" + year;
+                String keyMake = make + "_" + year;
+                String key = agency + "_" + year + "_" + make;
 
-                if (finesByMakeAndYear.containsKey(key)) {
-                    int totalFines = finesByMakeAndYear.get(key);
-                    finesByMakeAndYear.put(key, totalFines + 1);
+                if (finesByMakeAndYear.containsKey(keyMake)) {
+                    int totalFines = finesByMakeAndYear.get(keyMake);
+                    finesByMakeAndYear.put(keyMake, totalFines + 1);
                 } else {
-                    finesByMakeAndYear.put(key, 1);
+                    finesByMakeAndYear.put(keyMake, 1);
                 }
 
                 List<Integer> fineAmounts = fineAmountsByAgencyAndYear.containsKey(key) ? fineAmountsByAgencyAndYear.get(key) : new ArrayList<>();
@@ -138,7 +141,10 @@ public class DataLoader {
                 String year = parts[1];
 
                 int totalFines = entry.getValue();
-                System.out.println("Make: " + make + " | Year: " + year + " | Total Fines: " + totalFines);
+
+                if(!make.equals("")){
+                    System.out.println("Make: " + make + " | Year: " + year + " | Total Fines: " + totalFines);
+                }
             }
             System.out.println("-------------------------------------");
 
@@ -227,7 +233,7 @@ public class DataLoader {
             return null;
         }
 
-        Double latitude = Double.parseDouble(latitudeStr);
+        double latitude = Double.parseDouble(latitudeStr);
 
         if (latitude < -90.0 || latitude > 90.0) {
             return null;
@@ -240,7 +246,7 @@ public class DataLoader {
         if (!longitudeStr.matches("-?\\d+(\\.\\d+)?")) {
             return null;
         }
-        Double longitude = Double.parseDouble(longitudeStr);
+        double longitude = Double.parseDouble(longitudeStr);
         if (longitude < -180 || longitude > 180) {
             return null;
         }
