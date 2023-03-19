@@ -12,6 +12,9 @@ The program reads the CSV file using a BufferedReader. The program skips the fir
 
 The program also calculates various statistics based on the extracted data. The program uses HashMap and ArrayList to store the data and calculate the statistics. The program calculates the number of fines by make and year, the number of fines by agency and year, and the total fine amounts by agency and year. The program then prints the statistics to the console.
 
+## Crib Sheet
+We have a csv called crib sheet where we have 100 Agencies and we read it to extract the names and checked if the ids are in the data.csv
+
 ## Usage
 
 To use this program, simply run the `DataLoader` class. The program will read in the `data.csv` file located in the same directory as the program.
